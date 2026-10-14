@@ -6,13 +6,7 @@ namespace Padoca_Senac.Banco;
 
 public static class Banco
 {
-    private static readonly string stringConnection =
-        new ConfigurationBuilder()
-            .AddUserSecrets<Program>()
-            .Build()
-            .GetConnectionString("Padoca")
-        ?? throw new InvalidOperationException(
-            "String de conexão não encontrada nos User Secrets.");
+    private static string stringConnection = "Server=10.91.45.46;Port=3306;Database=padaria_bd;Uid=admin;Pwd=12345678";
 
     public static void connectAndTest()
     {
@@ -20,6 +14,7 @@ public static class Banco
         {
             try
             {
+                Console.WriteLine("Tentando conectar ao banco de dados...");
                 connection.Open();
 
                 using (var command = new MySqlCommand(
