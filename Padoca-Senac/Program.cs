@@ -5,12 +5,27 @@ internal class Program
 {
     static void Main(string[] args)
     {
+        Console.WriteLine("Digite o nome do cliente: ");
+        string nomeCliente = Console.ReadLine()!;
+
+        Console.WriteLine("Digite o endereço do cliente: ");
+        string enderecoCliente = Console.ReadLine()!;
+
+        Console.WriteLine("Digite o cpf do cliente: ");
+        string cpfCliente = Console.ReadLine()!;
+
+        Console.WriteLine("Digite o telefone do cliente: ");
+        string telefoneCliente = Console.ReadLine()!;
+
+        Console.WriteLine("Digite a quantidade de pontos: ");
+        int qtdPontos = int.Parse(Console.ReadLine()!);
+
         Cliente cliente1 = new Cliente(
-                nome: "Yvan Jesus",
-                cpf: "11122233745",
-                telefone: "111111111",
-                endereco: "Rua do SENAC",
-                pontos: 100
+                nome: nomeCliente,
+                cpf: cpfCliente,
+                telefone: telefoneCliente,
+                endereco: enderecoCliente,
+                pontos: qtdPontos
             );
 
         cliente1.Inserir(cliente1);
