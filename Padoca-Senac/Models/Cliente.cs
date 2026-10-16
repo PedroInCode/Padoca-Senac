@@ -74,7 +74,7 @@ internal class Cliente
             // Execucao: Como o comando de INSERT nao retorna tabelas (apenas executa uma ação),
             // ele envia o comando configurado para o método genérico 'executarComando' da classe 'Banco'.
             // 0 metodo retorna 1 (se o usuario for inserido com sucesso) ou -1 (se houver erro no banco).
-            return Banco.executarComanda(cmd);
+            return Banco.ExecutarComando(cmd);
         }
     }
 }
