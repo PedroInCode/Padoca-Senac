@@ -35,13 +35,13 @@ internal class Cliente
         this.Pontos = pontos;
     }
 
-    public Cliente(int id, string nome, string cpf, string telefone, string endereco, int pontos)
+    public Cliente(int id, string nome, string cpf, string endereco, string telefone, int pontos)
     {
         this.Id = id;
         this.Nome = nome;
         this.Cpf = cpf;
-        this.Telefone = telefone;
         this.Endereco = endereco;
+        this.Telefone = telefone;
         this.Pontos = pontos;
     }
 
@@ -80,13 +80,48 @@ internal class Cliente
 
     public static int Deletar(Cliente cliente)
     {
-        string cmdSql = "Delete From 'Cliente' WHERE 'Id' = @id";
+        string cmdSql = "Delete From `Cliente` WHERE `Id` = @id";
 
         using (var cmd = new MySqlCommand(cmdSql))
         {
             cmd.Parameters.AddWithValue("@id", cliente._id);
 
             return Banco.ExecutarComando(cmd);
+        }
+    }
+
+    public static List<Cliente> ListarTodos()
+    {
+        string cmdSql = "SELECT * FROM `Cliente`";
+
+        List<Cliente> listaClientes = new();
+
+        using(var cmd = new MySqlCommand(cmdSql))
+        {
+            // Executa a leitura. 0 bloco 'using' aqui é FUNDAMENTAL para garantir que o
+            // reader seja fechado no final, o que por sua vez fecha a conexao com o banco.
+            using (MySqlDataReader reader = Banco.ExecutarComRetornoDeDados(cmd))
+            {
+                // O while vai rodar uma vez para CADA linha que existir na tabela Cliente
+                while (reader.Read())
+                {
+                    // Extrai os dados da linha atual
+                    int id = reader.GetInt32("Id");
+                    string nome = reader.GetString("Nome");
+                    string cpf = reader.GetString("CPF");
+                    string telefone = reader.GetString("Telefone");
+                    string endereco = reader.GetString("Endereco");
+                    int pontos = reader.GetInt32("Pontos");
+
+                    // Cria o objeto Cliente com os dados extraidos
+                    Cliente cliente = new(id, nome, cpf, endereco, telefone, pontos);
+
+                    // Adiciona este cliente a nossa lista
+                    listaClientes.Add(cliente);
+                }
+            }
+
+            return listaClientes;
         }
     }
 }
