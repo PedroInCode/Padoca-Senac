@@ -107,10 +107,12 @@ internal class Cliente
                 {
                     // Extrai os dados da linha atual
                     int id = reader.GetInt32("Id");
-                    string nome = reader.GetString("Nome");
-                    string cpf = reader.GetString("CPF");
-                    string telefone = reader.GetString("Telefone");
-                    string endereco = reader.GetString("Endereco");
+
+                    string nome = ValidarCampo(reader["Nome"]);
+
+                    string cpf = ValidarCampo(reader["CPF"]);
+                    string telefone = ValidarCampo(reader["Telefone"]);
+                    string endereco = ValidarCampo(reader["Endereco"]);
                     int pontos = reader.GetInt32("Pontos");
 
                     // Cria o objeto Cliente com os dados extraidos
@@ -122,6 +124,18 @@ internal class Cliente
             }
 
             return listaClientes;
+        }
+    }
+
+    private static string ValidarCampo(object campo)
+    {
+        if (campo == DBNull.Value || campo == null)
+        {
+            return "";
+        }
+        else
+        {
+            return campo.ToString();
         }
     }
 }

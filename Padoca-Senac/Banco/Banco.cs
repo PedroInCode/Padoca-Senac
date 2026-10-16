@@ -108,6 +108,8 @@ public static class Banco
         {
             conexao.Open();
 
+            cmd.Connection = conexao;
+
             // Executa a consulta e retorna o "leitor" de dados.
             // O CommandBehavior. CloseConnection e a peça-chave deste método: ele avisa ao leitor
             // que assim que ele (o leitor) for fechado ou descartado la na tela/classe que o chamou,
