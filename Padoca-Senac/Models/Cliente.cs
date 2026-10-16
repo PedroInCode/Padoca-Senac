@@ -77,4 +77,16 @@ internal class Cliente
             return Banco.ExecutarComando(cmd);
         }
     }
+
+    public static int Deletar(Cliente cliente)
+    {
+        string cmdSql = "Delete From 'Cliente' WHERE 'Id' = @id";
+
+        using (var cmd = new MySqlCommand(cmdSql))
+        {
+            cmd.Parameters.AddWithValue("@id", cliente._id);
+
+            return Banco.ExecutarComando(cmd);
+        }
+    }
 }
