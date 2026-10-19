@@ -53,17 +53,17 @@ internal class Cliente
     public int Inserir(Cliente cliente)
     {
         // Instrução SQL: Define o comando de inserção (INSERT).
-        // O uso de marcações com '@' (ex: @Nome) e uma pratica de seguranca crucial chamada de "Parametrizacao"
+        // O uso de marcações com `@` (ex: @Nome) e uma pratica de seguranca crucial chamada de "Parametrizacao"
         // Ela impede ataques de SQL Injection, pois o banco entende o que é comando e o que é apenas texto do usuário.
 
         string sql = "INSERT INTO Cliente (`Nome`, `CPF`, `Telefone`, `Endereco`, `Pontos`) VALUES (@Nome, @CPF, @Telefone, @Endereco, @Pontos)";
 
         // Gerenciamento de recursos: Cria o objeto de comando já passando a instrução SQL.
-        // O 'using' garante que os recursos de memoria ocupados pelo comando sejam liberados ao final do bloco.
+        // O `using` garante que os recursos de memoria ocupados pelo comando sejam liberados ao final do bloco.
         using (var cmd = new MySqlCommand(sql))
         {
             // Vinculação de Dados: Pega as propriedades do objeto C# (cliente.Nome, uuario.Email, etc.)
-            // e substitui de forma segura as marcações '@' da string SQL com os valores reais.
+            // e substitui de forma segura as marcações `@` da string SQL com os valores reais.
 
             cmd.Parameters.AddWithValue("@Nome",  cliente.Nome);
             cmd.Parameters.AddWithValue("@CPF", cliente.Cpf);
@@ -72,7 +72,7 @@ internal class Cliente
             cmd.Parameters.AddWithValue("@Pontos", cliente.Pontos);
 
             // Execucao: Como o comando de INSERT nao retorna tabelas (apenas executa uma ação),
-            // ele envia o comando configurado para o método genérico 'executarComando' da classe 'Banco'.
+            // ele envia o comando configurado para o método genérico `executarComando` da classe `Banco`.
             // 0 metodo retorna 1 (se o usuario for inserido com sucesso) ou -1 (se houver erro no banco).
             return Banco.ExecutarComando(cmd);
         }
@@ -98,7 +98,7 @@ internal class Cliente
 
         using(var cmd = new MySqlCommand(cmdSql))
         {
-            // Executa a leitura. 0 bloco 'using' aqui é FUNDAMENTAL para garantir que o
+            // Executa a leitura. 0 bloco `using` aqui é FUNDAMENTAL para garantir que o
             // reader seja fechado no final, o que por sua vez fecha a conexao com o banco.
             using (MySqlDataReader reader = Banco.ExecutarComRetornoDeDados(cmd))
             {
@@ -127,7 +127,7 @@ internal class Cliente
         }
     }
 
-    public static Cliente? listarPorId(int id)
+    public static Cliente? ListarPorId(int id)
     {
         string sql = "SELECT * FROM `Cliente` WHERE `Id` = @Id";
 
@@ -157,7 +157,26 @@ internal class Cliente
         }
     } 
 
+    public static int AtualizarCliente(Cliente cliente)
+    {
+        string sql = "UPDATE `Cliente` SET `Nome` = @Nome, `Cpf` = @CPF, `Telefone` = @Telefone, `Endereco` = @Endereco, `Pontos` = @Pontos WHERE `Id` = @Id";
 
+        using (var cmd = new MySqlCommand(sql))
+        {
+            cmd.Parameters.AddWithValue("@Nome", cliente.Nome);
+            cmd.Parameters.AddWithValue("@CPF", cliente.Cpf);
+            cmd.Parameters.AddWithValue("@Telefone", cliente.Telefone);
+            cmd.Parameters.AddWithValue("@Endereco", cliente.Endereco);
+            cmd.Parameters.AddWithValue("@Pontos", cliente.Pontos);
+
+            // A chave de busca: Quem será atualizado?
+            cmd.Parameters.AddWithValue("@Id", cliente.Id);
+
+            // Execução: O UPDATE também é uma instrução de ação (como INSERT e DELETE).
+            // Ele vai retornar 1 (se encontrou  o ID e atualizou com sucesso) ou 0 (se o ID não existia).
+            return Banco.ExecutarComando(cmd);
+        }
+    }
 
 
     private static string ValidarCampo(object campo)

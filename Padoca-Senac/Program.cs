@@ -43,7 +43,36 @@ internal class Program
         //}
 
 
-        Cliente cli01 = Cliente.listarPorId(1);
+        //Cliente cli01 = Cliente.listarPorId(1);
+        //if (cli01 != null)
+        //{
+        //    Console.WriteLine($"ID: {cli01.Id}");
+        //    Console.WriteLine($"Nome: {cli01.Nome}");
+        //    Console.WriteLine($"CPF: {cli01.Cpf}");
+        //    Console.WriteLine($"Endereco: {cli01.Endereco}");
+        //    Console.WriteLine($"Telefone: {cli01.Telefone}");
+        //    Console.WriteLine($"Pontos: {cli01.Pontos}");
+        //}
+        //else
+        //{
+        //    Console.WriteLine("O cliente não foi encontrado!");
+        //}
+
+        Cliente? meuCliente = Cliente.ListarPorId(1);
+        if(meuCliente != null)
+        {
+            meuCliente.Endereco = "Rua Barão de Alagoas, 171";
+            meuCliente.Telefone = "1199995-4334";
+
+            int resultado = Cliente.AtualizarCliente(meuCliente);
+
+            if(resultado > 0)
+            {
+                Console.WriteLine("Cliente atualizado com sucesso!");
+            }
+        }
+
+        Cliente cli01 = Cliente.ListarPorId(1);
         if (cli01 != null)
         {
             Console.WriteLine($"ID: {cli01.Id}");
@@ -57,6 +86,5 @@ internal class Program
         {
             Console.WriteLine("O cliente não foi encontrado!");
         }
-
     }
 }
