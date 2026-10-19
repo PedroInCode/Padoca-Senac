@@ -58,33 +58,41 @@ internal class Program
         //    Console.WriteLine("O cliente não foi encontrado!");
         //}
 
-        Cliente? meuCliente = Cliente.ListarPorId(1);
-        if(meuCliente != null)
-        {
-            meuCliente.Endereco = "Rua Barão de Alagoas, 171";
-            meuCliente.Telefone = "1199995-4334";
+        //Funcionario? funcionario1 = Funcionario.ListarPorId(1);
 
-            int resultado = Cliente.AtualizarCliente(meuCliente);
+        //if (funcionario1 != null)
+        //{
+        //    funcionario1.Nome = "Pedro Capixaba";
+        //    funcionario1.Cpf = "43999977734";
+        //    funcionario1.Cargo = "Atendente";
 
-            if(resultado > 0)
-            {
-                Console.WriteLine("Cliente atualizado com sucesso!");
-            }
-        }
+        //    int resultado = Funcionario.AtualizarFuncionario(funcionario1);
 
-        Cliente cli01 = Cliente.ListarPorId(1);
-        if (cli01 != null)
-        {
-            Console.WriteLine($"ID: {cli01.Id}");
-            Console.WriteLine($"Nome: {cli01.Nome}");
-            Console.WriteLine($"CPF: {cli01.Cpf}");
-            Console.WriteLine($"Endereco: {cli01.Endereco}");
-            Console.WriteLine($"Telefone: {cli01.Telefone}");
-            Console.WriteLine($"Pontos: {cli01.Pontos}");
-        }
-        else
-        {
-            Console.WriteLine("O cliente não foi encontrado!");
-        }
+        //    if (resultado > 0)
+        //    {
+        //        Console.WriteLine("Funcionario atualizado com sucesso!");
+        //    }
+        //}
+
+        //Funcionario? funcionarioPesquisa = Funcionario.ListarPorId(1);
+        //if (funcionarioPesquisa != null)
+        //{
+        //    Console.WriteLine($"ID: {funcionarioPesquisa.Id}");
+        //    Console.WriteLine($"Nome: {funcionarioPesquisa.Nome}");
+        //    Console.WriteLine($"CPF: {funcionarioPesquisa.Cpf}");
+        //    Console.WriteLine($"Cargo: {funcionarioPesquisa.Cargo}");
+        //}
+        //else
+        //{
+        //    Console.WriteLine("O cliente não foi encontrado!");
+        //}
+
+        Funcionario funcionario = new("Yvan six seven", "87665432112", "Farmador de aura");
+
+        var testesla = Funcionario.ListarPorId(3);
+
+        Funcionario.Deletar(testesla);
+
+        
     }
 }
