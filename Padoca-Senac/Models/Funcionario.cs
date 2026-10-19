@@ -77,7 +77,7 @@ internal class Funcionario
         }
     }
 
-    public static List<Funcionario> ListarTodos()
+    public static List<Funcionario> ListarTodosFuncionarios()
     {
         string cmdSql = "SELECT * FROM `Funcionario`";
 

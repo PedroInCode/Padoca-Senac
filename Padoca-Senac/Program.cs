@@ -87,12 +87,20 @@ internal class Program
         //    Console.WriteLine("O cliente não foi encontrado!");
         //}
 
-        Funcionario funcionario = new("Yvan six seven", "87665432112", "Farmador de aura");
+        //Funcionario funcionario = new("Yvan six seven", "87665432112", "Farmador de aura");
 
-        var testesla = Funcionario.ListarPorId(3);
+        //var testesla = Funcionario.ListarPorId(3);
 
-        Funcionario.Deletar(testesla);
+        //Funcionario.Deletar(testesla);
 
-        
+        List<Funcionario> funcionario3 = Funcionario.ListarTodosFuncionarios();
+
+        foreach (Funcionario func in funcionario3)
+        {
+            Console.WriteLine($"ID: {func.Id}");
+            Console.WriteLine($"Nome: {func.Nome}");
+            Console.WriteLine($"CPF: {func.Cpf}");
+            Console.WriteLine($"Endereco: {func.Cargo}");
+        }
     }
 }
