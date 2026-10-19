@@ -80,7 +80,7 @@ internal class Cliente
 
     public static int Deletar(Cliente cliente)
     {
-        string cmdSql = "Delete From `Cliente` WHERE `Id` = @id";
+        string cmdSql = "Delete From `Cliente` WHERE `Id` = @Id";
 
         using (var cmd = new MySqlCommand(cmdSql))
         {
