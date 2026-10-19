@@ -30,18 +30,32 @@ internal class Program
 
         //cliente1.Inserir(cliente1);
 
-        List<Cliente> clientes = Cliente.ListarTodos();
+        //List<Cliente> clientes = Cliente.ListarTodos();
 
-        foreach(Cliente cliente in clientes)
+        //foreach(Cliente cliente in clientes)
+        //{
+        //    Console.WriteLine($"ID: {cliente.Id}");
+        //    Console.WriteLine($"Nome: {cliente.Nome}");
+        //    Console.WriteLine($"CPF: {cliente.Cpf}");
+        //    Console.WriteLine($"Endereco: {cliente.Endereco}");
+        //    Console.WriteLine($"Telefone: {cliente.Telefone}");
+        //    Console.WriteLine($"Pontos: {cliente.Pontos}");
+        //}
+
+
+        Cliente cli01 = Cliente.listarPorId(1);
+        if (cli01 != null)
         {
-            Console.WriteLine($"ID: {cliente.Id}");
-            Console.WriteLine($"Nome: {cliente.Nome}");
-            Console.WriteLine($"CPF: {cliente.Cpf}");
-            Console.WriteLine($"Endereco: {cliente.Endereco}");
-            Console.WriteLine($"Telefone: {cliente.Telefone}");
-            Console.WriteLine($"Pontos: {cliente.Pontos}");
-
-
+            Console.WriteLine($"ID: {cli01.Id}");
+            Console.WriteLine($"Nome: {cli01.Nome}");
+            Console.WriteLine($"CPF: {cli01.Cpf}");
+            Console.WriteLine($"Endereco: {cli01.Endereco}");
+            Console.WriteLine($"Telefone: {cli01.Telefone}");
+            Console.WriteLine($"Pontos: {cli01.Pontos}");
+        }
+        else
+        {
+            Console.WriteLine("O cliente não foi encontrado!");
         }
 
     }

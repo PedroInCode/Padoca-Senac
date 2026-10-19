@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using MySqlConnector;
 
-namespace Padoca_Senac.banco;
+namespace Padoca_Senac.banco; 
 
 public static class Banco
 {
