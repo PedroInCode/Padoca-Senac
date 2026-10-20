@@ -15,7 +15,7 @@ internal class ClienteService
 
         while (!sair)
         {
-
+            Console.Clear();
             Console.WriteLine("===== GESTÃO DE CLIENTES ===== ");
             Console.WriteLine("1 - Cadastrar Cliente");
             Console.WriteLine("2 - Listar Todos os Clientes");
@@ -44,6 +44,8 @@ internal class ClienteService
                     case "3":
                         ListarClientePorId();
                         break;
+                    case "4":
+                        AtualizarCliente(); break;
                 }
             }
             catch (Exception ex)
@@ -111,18 +113,55 @@ internal class ClienteService
     {
         Console.WriteLine("------ BUSCAR CLIENTE POR ID ------");
         Console.Write("\nDigite o Id do Cliente: ");
-        int idCliente = Int32.Parse(Console.ReadLine());
+        int idCliente = Int32.Parse(Console.ReadLine()!);
 
         var clienteBusca = Cliente.ListarPorId(idCliente);
 
         if (clienteBusca == null)
+        {
             Console.WriteLine("Error: Nenhum cliente encontrado no sistema!");
+            Console.WriteLine("Voltando para o menu principal...");
+            Thread.Sleep(3500);
+            throw new Exception();
+        }
         else
-            Console.WriteLine($"ID: {clienteBusca.Id}");
-            Console.WriteLine($"Nome: {clienteBusca.Nome} - Pontos: {clienteBusca.Pontos}");
+            Console.WriteLine($"{clienteBusca.Id} - Nome: {clienteBusca!.Nome} - Pontos: {clienteBusca.Pontos}");
 
         Console.Write("\nPressione qualquer tecla para voltar ao menu principal:");
         Console.ReadKey();
         Console.Clear();
+    }
+
+    private static void AtualizarCliente()
+    {
+        Console.WriteLine("------ ATUALIZAR CLIENTE ------");
+
+        Console.Write("Digite o Id do Cliente: ");
+        int idCli = Int32.Parse(Console.ReadLine()!);
+
+        var cliente = Cliente.ListarPorId(idCli);
+
+        if (cliente == null)
+        {
+            Console.WriteLine("Error: Nenhum cliente encontrado no sistema!");
+            Console.WriteLine("Voltando para o menu principal...");
+            Thread.Sleep(3500);
+            throw new Exception();
+        }
+
+        Console.WriteLine("\n-- ATUALIZE AS INFORMAÇÕES --");
+        Console.Write($"Novo Nome: ");
+        string newNome = Console.ReadLine();
+        Console.Write("Nova quantidade de pontos: ");
+        int newPontos = Int32.Parse(Console.ReadLine())!;
+
+        cliente.Nome = newNome;
+        cliente.Pontos = newPontos;
+
+        int resultado = Cliente.AtualizarCliente(cliente);
+
+        if (resultado > 0)
+            Console.WriteLine("Cliente atualizado com sucesso!");
+
     }
 }
