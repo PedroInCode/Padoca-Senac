@@ -46,6 +46,8 @@ internal class ClienteService
                         break;
                     case "4":
                         AtualizarCliente(); break;
+                    case "5":
+                        DeletarCliente(); break;
                 }
             }
             catch (Exception ex)
@@ -54,8 +56,6 @@ internal class ClienteService
             }
         }
     }
-
-
 
     private static void CadastrarCliente()
     {
@@ -131,7 +131,6 @@ internal class ClienteService
         Console.ReadKey();
         Console.Clear();
     }
-
     private static void AtualizarCliente()
     {
         Console.WriteLine("------ ATUALIZAR CLIENTE ------");
@@ -149,13 +148,15 @@ internal class ClienteService
             throw new Exception();
         }
 
+        Console.WriteLine($"ID: {cliente.Id} | Nome: {cliente!.Nome} | Pontos: {cliente.Pontos}");
+
         Console.WriteLine("\n-- ATUALIZE AS INFORMAÇÕES --");
         Console.Write($"Novo Nome: ");
-        string newNome = Console.ReadLine();
+        string newNome = Console.ReadLine()!;
         Console.Write("Nova quantidade de pontos: ");
-        int newPontos = Int32.Parse(Console.ReadLine())!;
+        int newPontos = Int32.Parse(Console.ReadLine()!)!;
 
-        cliente.Nome = newNome;
+        cliente.Nome = newNome!;
         cliente.Pontos = newPontos;
 
         int resultado = Cliente.AtualizarCliente(cliente);
@@ -163,5 +164,31 @@ internal class ClienteService
         if (resultado > 0)
             Console.WriteLine("Cliente atualizado com sucesso!");
 
+    }
+    private static void DeletarCliente()
+    {
+        Console.WriteLine("------ EXCLUINDO CLIENTE ------");
+        Console.Write("\nDigite o Id do Cliente: ");
+        int idCli = Int32.Parse(Console.ReadLine()!);
+
+        var cliente = Cliente.ListarPorId(idCli);
+
+        if (cliente == null)
+        {
+            Console.WriteLine("Nenhum cliente encontrado no sistema!");
+            throw new Exception();
+        }
+
+        Cliente.Deletar(cliente);
+        Console.WriteLine("Cliente excluido com sucesso!");
+        VoltarParaOMenu();
+    }
+
+    //Perfumaria
+    private static void VoltarParaOMenu()
+    {
+        Console.Write("\nPressione qualquer tecla para voltar ao menu principal:");
+        Console.ReadKey();
+        Console.Clear();
     }
 }
