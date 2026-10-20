@@ -36,23 +36,25 @@ internal class ClienteService
                 switch (opcao)
                 {
                     case "1":
-                        CadastrarCliente();
-                        break;
+                        CadastrarCliente(); break;
                     case "2":
-                        ListarClientes();
-                        break;
+                        ListarClientes(); break;
                     case "3":
-                        ListarClientePorId();
-                        break;
+                        ListarClientePorId(); break;
                     case "4":
                         AtualizarCliente(); break;
                     case "5":
                         DeletarCliente(); break;
+                    case "6":
+                        VisualizarPontuacao(); break;
+                    case "0":
+                        sair = true;
+                        Console.WriteLine("Encerrando o programa..."); break;
                 }
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.ToString());
             }
         }
     }
@@ -147,7 +149,7 @@ internal class ClienteService
             Thread.Sleep(3500);
             throw new Exception();
         }
-
+        
         Console.WriteLine($"ID: {cliente.Id} | Nome: {cliente!.Nome} | Pontos: {cliente.Pontos}");
 
         Console.WriteLine("\n-- ATUALIZE AS INFORMAÇÕES --");
@@ -182,6 +184,30 @@ internal class ClienteService
         Cliente.Deletar(cliente);
         Console.WriteLine("Cliente excluido com sucesso!");
         VoltarParaOMenu();
+    }
+    private static void VisualizarPontuacao()
+    {
+        Console.WriteLine("------ Pontuacao dos Clientes ------");
+
+        List<Cliente> lista = Cliente.ListarTodos();
+
+        if (lista.Count == 0)
+        {
+            Console.WriteLine("Nenhum cliente cadastrado no sistema!");
+            throw new Exception();
+        }
+            
+        var clientesOrdenados = lista.OrderByDescending(cliente => cliente.Pontos);
+
+        foreach (var cliente in clientesOrdenados)
+        {
+            Console.WriteLine($"{cliente.Nome} - Quantidade de Pontos: {cliente.Pontos}");
+        }
+        
+
+        Console.Write("\nPressione qualquer tecla para voltar ao menu principal:");
+        Console.ReadKey();
+        Console.Clear();
     }
 
     //Perfumaria
