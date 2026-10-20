@@ -131,35 +131,103 @@ internal class ClienteService
     }
     private static void AtualizarCliente()
     {
-        Console.WriteLine("------ ATUALIZAR CLIENTE ------");
+        int idCli;
+        Cliente? cliente = null;
 
-        Console.Write("Digite o Id do Cliente: ");
-        int idCli = Int32.Parse(Console.ReadLine()!);
-
-        var cliente = Cliente.ListarPorId(idCli);
-
-        if (cliente == null)
+        // Loop que continuará rodando enquanto o cliente não for encontrado
+        while (cliente == null)
         {
-            Console.WriteLine("Error: Nenhum cliente encontrado no sistema!");
-            Console.WriteLine("Voltando para o menu principal...");
+            Console.Clear();
+            Console.WriteLine("------ ATUALIZAR CLIENTE ------");
+            Console.Write("Digite o Id do Cliente (ou 0 para sair): ");
+
+            if (!int.TryParse(Console.ReadLine(), out idCli))
+            {
+                Console.WriteLine("\n[ERROR] ID inválido! Digite apenas números.");
+                PressionarParaTentarNovamente();
+                continue; // Volta para o início do while
+            }
+
+            // Permite ao usuário desistir e voltar ao menu
+            if (idCli == 0)
+            {
+                VoltarParaOMenu();
+                return;
+            }
+
+            cliente = Cliente.ListarPorId(idCli);
+
+            if (cliente == null)
+            {
+                Console.WriteLine("\n[ERRO] Nenhum cliente encontrado com esse ID no sistema!");
+                PressionarParaTentarNovamente();
+                // Como cliente continua null, o loop continuará
+            }
         }
-        else
+
+        // Se chegou aqui, o cliente foi encontrado com sucesso!
+        Console.WriteLine($"\nID: {cliente.Id} | Nome: {cliente.Nome} | Pontos: {cliente.Pontos} | Tel: {cliente.Telefone} | Endereço: {cliente.Endereco}");
+
+        Console.WriteLine("\n-- O QUE VOCÊ DESEJA ALTERAR? --");
+        Console.WriteLine("1 - Nome do Cliente");
+        Console.WriteLine("2 - Pontos");
+        Console.WriteLine("3 - Telefone");
+        Console.WriteLine("4 - Endereço");
+        Console.WriteLine("0 - Cancelar");
+        Console.Write("Escolha uma opção: ");
+
+        string opcao = Console.ReadLine()!;
+        bool alterado = true;
+
+        switch (opcao)
         {
-            Console.WriteLine($"ID: {cliente.Id} | Nome: {cliente!.Nome} | Pontos: {cliente.Pontos}");
+            case "1":
+                Console.Write("Novo Nome: ");
+                cliente.Nome = Console.ReadLine()!;
+                break;
 
-            Console.WriteLine("\n-- ATUALIZE AS INFORMAÇÕES --");
-            Console.Write($"Novo Nome: ");
-            string newNome = Console.ReadLine()!;
-            Console.Write("Nova quantidade de pontos: ");
-            int newPontos = Int32.Parse(Console.ReadLine()!)!;
+            case "2":
+                Console.Write("Nova quantidade de pontos: ");
+                if (int.TryParse(Console.ReadLine(), out int novosPontos))
+                {
+                    cliente.Pontos = novosPontos;
+                }
+                else
+                {
+                    Console.WriteLine("Valor de pontos inválido!");
+                    alterado = false;
+                }
+                break;
 
-            cliente.Nome = newNome!;
-            cliente.Pontos = newPontos;
+            case "3":
+                Console.Write("Novo Telefone: ");
+                cliente.Telefone = Console.ReadLine()!;
+                break;
 
+            case "4":
+                Console.Write("Novo Endereço: ");
+                cliente.Endereco = Console.ReadLine()!;
+                break;
+
+            case "0":
+                Console.WriteLine("Operação cancelada.");
+                alterado = false;
+                break;
+
+            default:
+                Console.WriteLine("Opção inválida!");
+                alterado = false;
+                break;
+        }
+
+        if (alterado)
+        {
             int resultado = Cliente.AtualizarCliente(cliente);
 
             if (resultado > 0)
-                Console.WriteLine("Cliente atualizado com sucesso!");
+                Console.WriteLine("\nCliente atualizado com sucesso!");
+            else
+                Console.WriteLine("\nErro ao atualizar o cliente no banco de dados.");
         }
 
         VoltarParaOMenu();
@@ -212,5 +280,12 @@ internal class ClienteService
         Console.Write("\nPressione qualquer tecla para voltar ao menu principal:");
         Console.ReadKey();
         Console.Clear();
+    }
+
+    // Método auxiliar apenas para pausar antes de limpar a tela no loop
+    private static void PressionarParaTentarNovamente()
+    {
+        Console.Write("\nPressione qualquer tecla para tentar novamente...");
+        Console.ReadKey();
     }
 }
