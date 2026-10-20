@@ -26,10 +26,81 @@ internal class ClienteService
             Console.WriteLine("0 - Sair do Programa");
 
             Console.WriteLine(" =============================");
-            Console.WriteLine("Digite uma opção: ");
+            Console.Write("Digite uma opção: ");
 
             string opcao = Console.ReadLine();
             Console.Clear();
+
+            try
+            {
+                switch (opcao)
+                {
+                    case "1":
+                        CadastrarCliente();
+                        break;
+                    case "2":
+                        ListarTodosClientes();
+                        break;
+                    case "3":
+                        BuscarClienteId();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
+    }
+
+
+
+    private static void CadastrarCliente()
+    {
+        Console.WriteLine("-=-=-=-=-=- CADASTRAR CLIENTE -=-=-=-=-=-");
+        Console.Write("Digite o nome do cliente: ");
+        string nomeCliente = Console.ReadLine()!;
+
+        Console.Write("Digite o endereço do cliente: ");
+        string enderecoCliente = Console.ReadLine()!;
+
+        Console.Write("Digite o cpf do cliente: ");
+        string cpfCliente = Console.ReadLine()!;
+
+        Console.Write("Digite o telefone do cliente: ");
+        string telefoneCliente = Console.ReadLine()!;
+
+        Console.Write("Digite a quantidade de pontos: ");
+        int qtdPontos = int.Parse(Console.ReadLine()!);
+
+        Cliente novoCliente = new Cliente(
+           nome: nomeCliente, cpf: cpfCliente, telefone: telefoneCliente,
+           endereco: enderecoCliente, pontos: qtdPontos
+        );
+
+        int resultadoInsert = Cliente.Inserir(novoCliente);
+        Console.Clear();
+
+        if (resultadoInsert > 0)
+            Console.WriteLine($"Cliente cadastrado com sucesso!!");
+    }
+    private static void ListarClientes()
+    {
+        Console.WriteLine("------ LISTA DE CLIENTES ------");
+
+        List<Cliente> lista = Cliente.ListarTodos();
+
+        if(lista.Count == 0) 
+            Console.WriteLine("Nenhum cliente cadastrado no sistema!");
+        else
+        {
+            foreach(var cliente in lista)
+            {
+                Console.WriteLine($"ID: {cliente.Id}");
+                Console.WriteLine($"Nome: {cliente.Nome}");
+                Console.WriteLine($"Pontos: {cliente.Pontos}");
+            }
+        }
+
+        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Padoca_Senac.banco;
 using Padoca_Senac.Models;
+using Padoca_Senac.Services;
 
 internal class Program
 {
@@ -93,14 +94,17 @@ internal class Program
 
         //Funcionario.Deletar(testesla);
 
-        List<Funcionario> funcionario3 = Funcionario.ListarTodosFuncionarios();
+        //List<Funcionario> funcionario3 = Funcionario.ListarTodosFuncionarios();
 
-        foreach (Funcionario func in funcionario3)
-        {
-            Console.WriteLine($"ID: {func.Id}");
-            Console.WriteLine($"Nome: {func.Nome}");
-            Console.WriteLine($"CPF: {func.Cpf}");
-            Console.WriteLine($"Endereco: {func.Cargo}");
-        }
+        //foreach (Funcionario func in funcionario3)
+        //{
+        //    Console.WriteLine($"ID: {func.Id}");
+        //    Console.WriteLine($"Nome: {func.Nome}");
+        //    Console.WriteLine($"CPF: {func.Cpf}");
+        //    Console.WriteLine($"Endereco: {func.Cargo}");
+        //}
+
+        ClienteService.MenuCliente();
+
     }
 }
