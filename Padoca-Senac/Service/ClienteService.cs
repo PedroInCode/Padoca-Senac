@@ -39,10 +39,11 @@ internal class ClienteService
                         CadastrarCliente();
                         break;
                     case "2":
-                        ListarTodosClientes();
+                        ListarClientes();
                         break;
                     case "3":
-                        BuscarClienteId();
+                        ListarClientePorId();
+                        break;
                 }
             }
             catch (Exception ex)
@@ -96,11 +97,32 @@ internal class ClienteService
             foreach(var cliente in lista)
             {
                 Console.WriteLine($"ID: {cliente.Id}");
-                Console.WriteLine($"Nome: {cliente.Nome}");
-                Console.WriteLine($"Pontos: {cliente.Pontos}");
+                Console.WriteLine($"Nome: {cliente.Nome} - Pontos: {cliente.Pontos}");
             }
         }
 
+        Console.Write("\nPressione qualquer tecla para voltar ao menu principal:");
+        Console.ReadKey();
+        Console.Clear();
+
         
+    }
+    private static void ListarClientePorId()
+    {
+        Console.WriteLine("------ BUSCAR CLIENTE POR ID ------");
+        Console.Write("\nDigite o Id do Cliente: ");
+        int idCliente = Int32.Parse(Console.ReadLine());
+
+        var clienteBusca = Cliente.ListarPorId(idCliente);
+
+        if (clienteBusca == null)
+            Console.WriteLine("Error: Nenhum cliente encontrado no sistema!");
+        else
+            Console.WriteLine($"ID: {clienteBusca.Id}");
+            Console.WriteLine($"Nome: {clienteBusca.Nome} - Pontos: {clienteBusca.Pontos}");
+
+        Console.Write("\nPressione qualquer tecla para voltar ao menu principal:");
+        Console.ReadKey();
+        Console.Clear();
     }
 }
