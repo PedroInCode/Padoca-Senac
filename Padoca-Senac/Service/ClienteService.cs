@@ -287,7 +287,7 @@ internal class ClienteService
     }
     private static void VisualizarPontuacao()
     {
-        Console.WriteLine("------ Pontuacao dos Clientes ------");
+        Console.WriteLine("------ PONTUAÇÃO DOS CLIENTES ------");
 
         List<Cliente> lista = Cliente.ListarTodos();
 
@@ -297,12 +297,62 @@ internal class ClienteService
         }
         else
         {
-            var clientesOrdenados = lista.OrderByDescending(cliente => cliente.Pontos);
+            int opcao = 0;
+            bool opcaoValida = false;
 
+            // Loop para garantir que o usuário digite uma opção numérica válida (1 ou 2)
+            while (!opcaoValida)
+            {
+                Console.WriteLine("\nComo deseja ordenar a pontuação?");
+                Console.WriteLine("1 - Crescente (Menor para Maior)");
+                Console.WriteLine("2 - Decrescente (Maior para Menor)");
+                Console.Write("Escolha uma opção: ");
+
+                // Valida se o que foi digitado é um número inteiro
+                if (!int.TryParse(Console.ReadLine(), out opcao))
+                {
+                    Console.WriteLine("\n[ERRO] Opção inválida! Digite apenas números.");
+                    PressionarParaTentarNovamente();
+                    Console.Clear();
+                    Console.WriteLine("------ PONTUAÇÃO DOS CLIENTES ------");
+                    continue;
+                }
+
+                // Valida se o número digitado está entre as opções esperadas (1 ou 2)
+                if (opcao == 1 || opcao == 2)
+                {
+                    opcaoValida = true;
+                }
+                else
+                {
+                    Console.WriteLine("\n[ERRO] Escolha apenas 1 ou 2.");
+                    PressionarParaTentarNovamente();
+                    Console.Clear();
+                    Console.WriteLine("------ PONTUAÇÃO DOS CLIENTES ------");
+                }
+            }
+
+
+            // Usei IEnumrable para guardar a regra de como ordenar, a ordenação de fato so acontece no momento exato em que o foreach começa a rodar. Isso poupa muito processamento!
+            IEnumerable<Cliente> clientesOrdenados; // Variável para armazenar a lista ordenada
+
+            if (opcao == 1)
+            {
+                // Do menor para o maior
+                clientesOrdenados = lista.OrderBy(cliente => cliente.Pontos);
+            }
+            else
+            {
+                // Do maior para o menor 
+                clientesOrdenados = lista.OrderByDescending(cliente => cliente.Pontos);
+            }
+
+            Console.WriteLine("\n------------------------------------");
             foreach (var cliente in clientesOrdenados)
             {
                 Console.WriteLine($"{cliente.Nome} - Quantidade de Pontos: {cliente.Pontos}");
             }
+            Console.WriteLine("------------------------------------");
         }
             
         VoltarParaOMenu();
