@@ -36,7 +36,7 @@ internal class Fornecedor
         this.Telefone = telefone;
     }
 
-    public int Inserir(Fornecedor fornecedor)
+    public static int Inserir(Fornecedor fornecedor)
     {
         string sql = "INSERT INTO Fornecedor (`Nome`, `CNPJ`, `Telefone`) VALUES (@Nome, @CNPJ, @Telefone)";
 
@@ -130,7 +130,7 @@ internal class Fornecedor
         }
     }
 
-    public static int AtualizarMarca(Fornecedor fornecedor)
+    public static int AtualizarFornecedor(Fornecedor fornecedor)
     {
         string sql = "UPDATE `Fornecedor` SET `Nome` = @Nome, `CNPJ` = @CNPJ, `Telefone` = @Telefone WHERE `Id` = @Id";
 
