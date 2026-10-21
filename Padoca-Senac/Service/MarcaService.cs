@@ -42,7 +42,7 @@ internal class MarcaService
                     case "4":
                         AtualizarMarca(); break;
                     case "5":
-                        DeletarMarcas(); break;
+                        DeletarMarca(); break;
                     case "0":
                         sair = true;
                         Console.WriteLine("Encerrando o programa..."); break;

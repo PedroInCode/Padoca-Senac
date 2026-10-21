@@ -32,7 +32,7 @@ internal class Marca
         this.Telefone = telefone;
     }
 
-    public int Inserir(Marca marca)
+    public static int Inserir(Marca marca)
     {
         string sql = "INSERT INTO Marca (`Nome`, `Telefone`) VALUES (@Nome, @Telefone)";
 
