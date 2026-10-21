@@ -234,21 +234,55 @@ internal class ClienteService
     }
     private static void DeletarCliente()
     {
-        Console.WriteLine("------ EXCLUINDO CLIENTE ------");
-        Console.Write("\nDigite o Id do Cliente: ");
-        int idCli = Int32.Parse(Console.ReadLine()!);
+        int idCli;
+        Cliente? cliente = null;
 
-        var cliente = Cliente.ListarPorId(idCli);
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("------ EXCLUINDO CLIENTE ------");
+            Console.Write("\nDigite o Id do Cliente (ou 0 para cancelar): ");
 
-        if (cliente == null)
-        {
-            Console.WriteLine("Nenhum cliente encontrado no sistema!");
+            if(!int.TryParse(Console.ReadLine(), out idCli))
+            {
+                Console.WriteLine("\n[ERRO] ID inválido! Digite apenas números.");
+                PressionarParaTentarNovamente();
+                continue; // Volta para o topo do loop
+            }
+
+            if(idCli == 0)
+            {
+                VoltarParaOMenu();
+                return;
+            }
+
+            cliente = Cliente.ListarPorId(idCli);
+
+            if(cliente == null)
+            {
+                Console.WriteLine("\n[ERRO] Nenhum cliente encontrado no sistema!");
+                PressionarParaTentarNovamente();
+                continue; // Volta para o topo do loop
+            }
+
+            Console.WriteLine($"\nCliente encontrado: ID: {cliente.Id} | Nome: {cliente.Nome}");
+            Console.Write("\nTem certeza que deseja excluir este cliente? (S/N): ");
+            //Trim remove espaços e ToUpper joga tudo pra maiuscula
+            string confirmacao = Console.ReadLine()!.Trim().ToUpper();
+
+            if(confirmacao == "S")
+            {
+                Cliente.Deletar(cliente);
+                Console.WriteLine("\nCliente excluído com sucesso!");
+                break;
+            }
+            else
+            {
+                Console.WriteLine("\nExclusão cancelada pelo usuário.");
+                PressionarParaTentarNovamente();
+            }
         }
-        else
-        {
-            Cliente.Deletar(cliente);
-            Console.WriteLine("Cliente excluido com sucesso!");
-        }
+
         VoltarParaOMenu();
     }
     private static void VisualizarPontuacao()
