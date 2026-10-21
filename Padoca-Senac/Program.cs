@@ -1,6 +1,6 @@
 ﻿using Padoca_Senac.banco;
-using Padoca_Senac.Menus;
 using Padoca_Senac.Models;
+using Padoca_Senac.Service;
 using Padoca_Senac.Services;
 
 internal class Program
@@ -105,7 +105,7 @@ internal class Program
         //    Console.WriteLine($"Endereco: {func.Cargo}");
         //}
 
-        ClienteService.MenuCliente();
+        FuncionarioService.MenuFuncionario();
         
     }
 }

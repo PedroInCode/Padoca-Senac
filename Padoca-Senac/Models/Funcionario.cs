@@ -38,7 +38,7 @@ internal class Funcionario
     }
 
    
-    public int Inserir(Funcionario funcionario)
+    public static int Inserir(Funcionario funcionario)
     {
         // Instrução SQL: Define o comando de inserção (INSERT).
         // O uso de marcações com `@` (ex: @Nome) e uma pratica de seguranca crucial chamada de "Parametrizacao"
