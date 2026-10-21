@@ -9,7 +9,7 @@ namespace Padoca_Senac.Service;
 
 internal class ProdutoService
 {
-    public static void MenuMarca()
+    public static void MenuProduto()
     {
         bool sair = false;
         while (!sair)
