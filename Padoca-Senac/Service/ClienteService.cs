@@ -113,21 +113,55 @@ internal class ClienteService
     }
     private static void ListarClientePorId()
     {
-        Console.WriteLine("------ BUSCAR CLIENTE POR ID ------");
-        Console.Write("\nDigite o Id do Cliente: ");
-        int idCliente = Int32.Parse(Console.ReadLine()!);
+        int idCli;
+        Cliente? cliente = null;
 
-        var clienteBusca = Cliente.ListarPorId(idCliente);
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("------ BUSCAR CLIENTE POR ID ------");
+            Console.Write("\nDigite o Id do Cliente (ou 0 para sair): ");
 
-        if (clienteBusca == null)
-        {
-            Console.WriteLine("Error: Nenhum cliente encontrado no sistema!");
+            if(!int.TryParse(Console.ReadLine(), out idCli))
+            {
+                Console.WriteLine("\n[ERROR] ID inválido! Digite apenas números.");
+                PressionarParaTentarNovamente();
+                continue; // Volta para o início do while
+            }
+
+            // Permite ao usuário desistir e voltar ao menu
+            if (idCli == 0)
+            {
+                VoltarParaOMenu();
+                return;
+            }
+
+            cliente = Cliente.ListarPorId(idCli);
+
+            if (cliente == null)
+            {
+                Console.WriteLine("\n[ERRO] Nenhum cliente encontrado com esse ID no sistema!");
+                PressionarParaTentarNovamente();
+                // Como cliente continua null, o loop continuará
+            }
+
+            // Se chegou aqui, o cliente foi encontrado com sucesso!
+            Console.WriteLine($"\nID: {cliente.Id} | Nome: {cliente.Nome} | Pontos: {cliente.Pontos} | Tel: {cliente.Telefone} | Endereço: {cliente.Endereco}");
+
+            Console.WriteLine("\n--------------------------------");
+            Console.WriteLine("1 - Buscar outro cliente");
+            Console.WriteLine("0 - Voltar ao menu principal");
+            Console.Write("Escolha uma opção: ");
+
+            string opcao = Console.ReadLine()!;
+
+            if (opcao == "0")
+            {
+                VoltarParaOMenu();
+                return; // Sai do método e encerra
+            }
+            // Se digitar qualquer outra coisa ou "1", o loop `while (true)` roda de novo e limpa a tela para a próxima busca!
         }
-        else
-        {
-            Console.WriteLine($"{clienteBusca.Id} - Nome: {clienteBusca!.Nome} - Pontos: {clienteBusca.Pontos}");
-        }
-        VoltarParaOMenu();
     }
     private static void AtualizarCliente()
     {
