@@ -105,7 +105,19 @@ internal class Program
         //    Console.WriteLine($"Endereco: {func.Cargo}");
         //}
 
-        FuncionarioService.MenuFuncionario();
-        
+        Produto prod1 = new Produto("Pedra", 1, "Rochas", true, 1);
+
+        List<Produto> naoAguentoMais = Produto.ListarTodosProdutosComMarca();
+
+        foreach (Produto produto in naoAguentoMais)
+        {
+            foreach (var propriedade in produto.GetType().GetProperties())
+            {
+                Console.WriteLine($"{propriedade.Name}: {propriedade.GetValue(produto)}");
+            }
+
+            Console.WriteLine("--------------------");
+
+        }
     }
 }

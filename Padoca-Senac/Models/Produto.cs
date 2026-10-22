@@ -17,6 +17,7 @@ internal class Produto
     private string _categoria;
     private bool _fabricado;
     private int _marcaid;
+    private string _nomeMarca;
 
     public int Id { get => _id; set => _id = value; }
     public string Nome { get => _nome; set => _nome = value; }
@@ -24,6 +25,7 @@ internal class Produto
     public string Categoria { get => _categoria; set => _categoria = value; }
     public bool Fabricado { get => _fabricado; set => _fabricado = value; }
     public int MarcaId { get => _marcaid; set => _marcaid = value; }
+    public string NomeMarca { get => _nomeMarca; }
 
     public Produto(int id, string nome, decimal preco, string categoria, bool fabricado, int marcaid)
     {
@@ -33,6 +35,7 @@ internal class Produto
         this._categoria = categoria;
         this._fabricado = fabricado;
         this._marcaid = marcaid;
+        this._nomeMarca = NomeMarca;
     }
 
     public Produto(string nome, decimal preco, string categoria, bool fabricado, int marcaid)
@@ -42,6 +45,7 @@ internal class Produto
         this._categoria = categoria;
         this._fabricado = fabricado;
         this._marcaid = marcaid;
+        this._nomeMarca = NomeMarca;
     }
 
     public static int Inserir(Produto produto)
@@ -109,6 +113,50 @@ internal class Produto
 
                     // Cria o objeto Cliente com os dados extraidos
                     Produto produto = new(id, nome, preco, categoria, fabricado, marcaid );
+
+                    // Adiciona este cliente a nossa lista
+                    listaProdutos.Add(produto);
+                }
+            }
+
+            return listaProdutos;
+        }
+    }
+
+    public static List<Produto> ListarTodosProdutosComMarca()
+    {
+        string cmdSql = "SELECT p.Id, p.Nome, p.Preco, p.Categoria, p.Fabricado,m.Id as MarcaId, m.Nome AS marcaNome FROM `Produto` as `p` INNER JOIN `Marca` as `m` ON `p`.`MarcaId` = `m`.`Id`;";
+
+        List<Produto> listaProdutos = new();
+
+        using (var cmd = new MySqlCommand(cmdSql))
+        {
+            // Executa a leitura. 0 bloco `using` aqui é FUNDAMENTAL para garantir que o
+            // reader seja fechado no final, o que por sua vez fecha a conexao com o banco.
+            using (MySqlDataReader reader = Banco.ExecutarComRetornoDeDados(cmd))
+            {
+                // O while vai rodar uma vez para CADA linha que existir na tabela Cliente
+                while (reader.Read())
+                {
+                    // Extrai os dados da linha atual
+                    int id = reader.GetInt32("Id");
+
+                    string nome = ValidarCampo(reader["Nome"]);
+
+                    decimal preco = reader.GetDecimal("Preco");
+                    //int pontos = reader.GetInt32("Pontos");
+
+                    string categoria = ValidarCampo(reader["Categoria"]);
+
+                    bool fabricado = reader.GetBoolean("Fabricado");
+
+                    int marcaid = reader.GetInt32("MarcaId");
+
+                    string nomeMarca = ValidarCampo(reader["MarcaNome"]);
+
+                    // Cria o objeto Cliente com os dados extraidos
+                    Produto produto = new(id, nome, preco, categoria, fabricado, marcaid);
+                    produto._nomeMarca = nomeMarca;
 
                     // Adiciona este cliente a nossa lista
                     listaProdutos.Add(produto);
