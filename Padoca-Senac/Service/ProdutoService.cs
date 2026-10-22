@@ -67,8 +67,8 @@ internal class ProdutoService
         Console.Write("Digite a Categoria do produto: ");
         string categoriaProduto = Console.ReadLine()!;
 
-        Console.Write("Digite se o Produto foi Fabricado (true/false): ");
-        bool fabricadoProduto = bool.Parse(Console.ReadLine()!);
+        Console.Write("Digite se o Produto foi Fabricado (1/0): ");
+        int fabricadoProduto = int.Parse(Console.ReadLine()!);
 
         Console.Write("Digite o [ID] da marca: ");
         int idmarca = int.Parse(Console.ReadLine()!);
@@ -226,8 +226,8 @@ internal class ProdutoService
                 break;
 
             case "4":
-                Console.Write("Novo status de Fabricação (true/false): ");
-                produto.Fabricado = bool.Parse(Console.ReadLine()!);
+                Console.Write("Novo status de Fabricação (1/0): ");
+                produto.Fabricado = int.Parse(Console.ReadLine()!);
                 break;
 
             case "5":

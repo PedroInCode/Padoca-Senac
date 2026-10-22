@@ -15,7 +15,7 @@ internal class Produto
     private string _nome;
     private decimal _preco;
     private string _categoria;
-    private bool _fabricado;
+    private int _fabricado;
     private int _marcaid;
     private string _nomeMarca;
 
@@ -23,11 +23,11 @@ internal class Produto
     public string Nome { get => _nome; set => _nome = value; }
     public decimal Preco { get => _preco; set => _preco = value; }
     public string Categoria { get => _categoria; set => _categoria = value; }
-    public bool Fabricado { get => _fabricado; set => _fabricado = value; }
+    public int Fabricado { get => _fabricado; set => _fabricado = value; }
     public int MarcaId { get => _marcaid; set => _marcaid = value; }
     public string NomeMarca { get => _nomeMarca; }
 
-    public Produto(int id, string nome, decimal preco, string categoria, bool fabricado, int marcaid)
+    public Produto(int id, string nome, decimal preco, string categoria, int fabricado, int marcaid)
     {
         this._id = id;
         this._nome = nome;
@@ -38,7 +38,7 @@ internal class Produto
         this._nomeMarca = NomeMarca;
     }
 
-    public Produto(string nome, decimal preco, string categoria, bool fabricado, int marcaid)
+    public Produto(string nome, decimal preco, string categoria, int fabricado, int marcaid)
     {
         this._nome = nome;
         this._preco = preco;
@@ -107,7 +107,7 @@ internal class Produto
 
                     string categoria = ValidarCampo(reader["Categoria"]);
 
-                    bool fabricado = reader.GetBoolean("Fabricado");
+                    int fabricado = reader.GetInt32("Fabricado");
 
                     int marcaid = reader.GetInt32("MarcaId");
 
@@ -148,7 +148,7 @@ internal class Produto
 
                     string categoria = ValidarCampo(reader["Categoria"]);
 
-                    bool fabricado = reader.GetBoolean("Fabricado");
+                    int fabricado = reader.GetInt32("Fabricado");
 
                     int marcaid = reader.GetInt32("MarcaId");
 
@@ -166,6 +166,51 @@ internal class Produto
             return listaProdutos;
         }
     }
+
+    //public static List<ProdutoFabricado> ListarProdutosFabricados()
+    //{
+    //    string sql = @"SELECT p.Id, p.Nome, p.Preco, p.Categoria, p.Fabricado, p.MarcaId, pf.ProdutoId, pf.DescricaoProducao FROM Produto AS p INNER JOIN ProdutoFabricado AS pf ON p.Id = pf.ProdutoId WHERE p.Fabricado = 1";
+
+    //    List<ProdutoFabricado> listaProdutos = new();
+
+    //    using (var cmd = new MySqlCommand(sql))
+    //    {
+    //        using (MySqlDataReader reader =
+    //            Banco.ExecutarComRetornoDeDados(cmd))
+    //        {
+    //            while (reader.Read())
+    //            {
+    //                int id = reader.GetInt32("Id");
+    //                string nome = ValidarCampo(reader["Nome"]);
+    //                decimal preco = reader.GetDecimal("Preco");
+    //                string categoria = ValidarCampo(reader["Categoria"]);
+    //                bool fabricado = reader.GetBoolean("Fabricado");
+    //                int marcaId = reader.GetInt32("MarcaId");
+
+    //                int produtoId = reader.GetInt32("ProdutoId");
+    //                string nomeMarca = ValidarCampo(reader["MarcaNome"]);
+    //                string descricao = ValidarCampo(reader["DescricaoProducao"]);
+
+    //                ProdutoFabricado produto = new(
+    //                    id,
+    //                    nome,
+    //                    preco,
+    //                    categoria,
+    //                    fabricado,
+    //                    marcaId,
+    //                    produtoId,
+    //                    descricao
+    //                );
+
+    //                produto._nomeMarca = nomeMarca;
+
+    //                listaProdutos.Add(produto);
+    //            }
+    //        }
+
+    //        return listaProdutos;
+    //    }
+    //}
 
     public static Produto? ListarPorId(int id)
     {
@@ -186,7 +231,7 @@ internal class Produto
                 string nome = ValidarCampo(reader["Nome"]);
                 decimal preco = reader.GetDecimal("Preco");
                 string categoria = ValidarCampo(reader["Categoria"]);
-                bool fabricado = reader.GetBoolean("Fabricado");
+                int fabricado = reader.GetInt32("Fabricado");
                 int marcaid = reader.GetInt32("MarcaId");
 
                 // Cria o objeto Cliente com os dados extraidos
