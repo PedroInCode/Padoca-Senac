@@ -32,6 +32,7 @@ internal class ProdutoFabricado : Produto
         this.DescricaoProducao = descricaoProducao;
     }
 
+
     public int ProdutoId { get => produtoId; set => produtoId = value; }
     public string DescricaoProducao { get => descricaoProducao; set => descricaoProducao = value; }
 

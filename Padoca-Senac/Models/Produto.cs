@@ -50,6 +50,10 @@ internal class Produto
 
     }
 
+    public Produto(int id)
+    {
+        this.Id = id;
+    }
 
     public static int Inserir(Produto produto)
     {
