@@ -105,19 +105,21 @@ internal class Program
         //    Console.WriteLine($"Endereco: {func.Cargo}");
         //}
 
-        Produto prod1 = new Produto("Pedra", 1, "Rochas", 1, 1);
+        //Produto prod1 = new Produto("Pedra", 1, "Rochas", 1, 1);
 
-        List<Produto> naoAguentoMais = Produto.ListarTodosProdutosComMarca();
+        //List<Produto> naoAguentoMais = Produto.ListarTodosProdutosComMarca();
 
-        foreach (Produto produto in naoAguentoMais)
-        {
-            foreach (var propriedade in produto.GetType().GetProperties())
-            {
-                Console.WriteLine($"{propriedade.Name}: {propriedade.GetValue(produto)}");
-            }
+        //foreach (Produto produto in naoAguentoMais)
+        //{
+        //    foreach (var propriedade in produto.GetType().GetProperties())
+        //    {
+        //        Console.WriteLine($"{propriedade.Name}: {propriedade.GetValue(produto)}");
+        //    }
 
-            Console.WriteLine("--------------------");
+        //    Console.WriteLine("--------------------");
 
-        }
+        //}
+
+        ProdutoService.MenuProduto();
     }
 }

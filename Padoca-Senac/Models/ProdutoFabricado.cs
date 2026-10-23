@@ -15,7 +15,7 @@ internal class ProdutoFabricado : Produto
 
     // Construtor completo: Recebe os atributos do Pai (Produto) e do Filho (ProdutoFabricado)
     // O "base(...)" envia os dados correspondentes para o construtor da classe Produto
-    public ProdutoFabricado(int id, string nome, decimal preco, string categoria, int fabricado, int marcaId, int produtoId, string descricaoProducao)
+    public ProdutoFabricado(int id, string nome, decimal preco, string categoria, bool fabricado, int marcaId, int produtoId, string descricaoProducao)
         : base(id, nome, preco, categoria, fabricado, marcaId)
     {
         if (string.IsNullOrWhiteSpace(descricaoProducao))
@@ -88,7 +88,7 @@ internal class ProdutoFabricado : Produto
                     string nome = validarCampo(reader["Nome"]);
                     decimal preco = Convert.ToDecimal(reader["Preco"]);
                     string categoria = validarCampo(reader["Categoria"]);
-                    int fabricado = Convert.ToInt32(reader["Fabricado"]);
+                    bool fabricado = reader.GetBoolean("Fabricado");
                     int marcaId = Convert.ToInt32(reader["MarcaId"]);
 
                     // Extrai dados do ProdutoFabricado (Filho)
@@ -131,7 +131,7 @@ internal class ProdutoFabricado : Produto
                 decimal preco = Convert.ToDecimal(reader["Preco"]);
                 string categoria = validarCampo(reader["Categoria"]);
                 int marcaId = Convert.ToInt32(reader["MarcaId"]);
-                int fabricado = Convert.ToInt32(reader["Fabricado"]);
+                bool fabricado = reader.GetBoolean("Fabricado");
                 int produtoId = reader.GetInt32("ProdutoId");
                 string descricaoProducao = validarCampo(reader["DescricaoProducao"]);
 

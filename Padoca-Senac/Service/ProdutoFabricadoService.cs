@@ -79,7 +79,7 @@ internal class ProdutoFabricadoService
         int.TryParse(Console.ReadLine(), out idProduto);
 
         Console.WriteLine("Digite a Descrição da Produção: ");
-        string descricao = Console.ReadLine();
+        string descricao = Console.ReadLine()!;
 
         ProdutoFabricado novoRegisto = new ProdutoFabricado(
             produtoId: idProduto,

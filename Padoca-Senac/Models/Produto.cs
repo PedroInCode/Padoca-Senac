@@ -15,7 +15,7 @@ internal class Produto
     private string _nome;
     private decimal _preco;
     private string _categoria;
-    private int _fabricado;
+    private bool _fabricado;
     private int _marcaid;
     private string _nomeMarca;
 
@@ -23,11 +23,11 @@ internal class Produto
     public string Nome { get => _nome; set => _nome = value; }
     public decimal Preco { get => _preco; set => _preco = value; }
     public string Categoria { get => _categoria; set => _categoria = value; }
-    public int Fabricado { get => _fabricado; set => _fabricado = value; }
+    public bool Fabricado { get => _fabricado; set => _fabricado = value; }
     public int MarcaId { get => _marcaid; set => _marcaid = value; }
     public string NomeMarca { get => _nomeMarca; }
 
-    public Produto(string nome, decimal preco, string categoria, int fabricado, int marcaid) 
+    public Produto(string nome, decimal preco, string categoria, bool fabricado, int marcaid) 
     {
         if (string.IsNullOrWhiteSpace(nome)) throw new Exception("O nome do produto não pode ser vazio");
         if (preco < 0) throw new Exception("O preco do produto não pode ser negativo");
@@ -42,7 +42,7 @@ internal class Produto
         this._nomeMarca = NomeMarca;
     }
 
-    public Produto(int id, string nome, decimal preco, string categoria, int fabricado, int marcaid) : this(nome, preco, categoria, fabricado, marcaid)
+    public Produto(int id, string nome, decimal preco, string categoria, bool fabricado, int marcaid) : this(nome, preco, categoria, fabricado, marcaid)
     {
         if (id <= 0) throw new Exception("O id do produto é invalido");
 
@@ -114,7 +114,7 @@ internal class Produto
 
                     string categoria = ValidarCampo(reader["Categoria"]);
 
-                    int fabricado = reader.GetInt32("Fabricado");
+                    bool fabricado = reader.GetBoolean("Fabricado");
 
                     int marcaid = reader.GetInt32("MarcaId");
 
@@ -155,7 +155,7 @@ internal class Produto
 
                     string categoria = ValidarCampo(reader["Categoria"]);
 
-                    int fabricado = reader.GetInt32("Fabricado");
+                    bool fabricado = reader.GetBoolean("Fabricado");
 
                     int marcaid = reader.GetInt32("MarcaId");
 
@@ -238,9 +238,8 @@ internal class Produto
                 string nome = ValidarCampo(reader["Nome"]);
                 decimal preco = reader.GetDecimal("Preco");
                 string categoria = ValidarCampo(reader["Categoria"]);
-                int fabricado = reader.GetInt32("Fabricado");
                 int marcaid = reader.GetInt32("MarcaId");
-
+                bool fabricado = reader.GetBoolean("Fabricado");
                 // Cria o objeto Cliente com os dados extraidos
                 produto = new(id, nome, preco, categoria, fabricado, marcaid);
             }
