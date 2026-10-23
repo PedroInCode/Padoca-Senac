@@ -27,9 +27,13 @@ internal class Produto
     public int MarcaId { get => _marcaid; set => _marcaid = value; }
     public string NomeMarca { get => _nomeMarca; }
 
-    public Produto(int id, string nome, decimal preco, string categoria, int fabricado, int marcaid)
+    public Produto(string nome, decimal preco, string categoria, int fabricado, int marcaid) 
     {
-        this._id = id;
+        if (string.IsNullOrWhiteSpace(nome)) throw new Exception("O nome do produto não pode ser vazio");
+        if (preco < 0) throw new Exception("O preco do produto não pode ser negativo");
+        if (string.IsNullOrWhiteSpace(categoria)) throw new Exception("A categoria não pode ser vazia");
+        if (marcaid <= 0) throw new Exception("O id da Marca deve ser maior que 0");
+
         this._nome = nome;
         this._preco = preco;
         this._categoria = categoria;
@@ -38,15 +42,14 @@ internal class Produto
         this._nomeMarca = NomeMarca;
     }
 
-    public Produto(string nome, decimal preco, string categoria, int fabricado, int marcaid)
+    public Produto(int id, string nome, decimal preco, string categoria, int fabricado, int marcaid) : this(nome, preco, categoria, fabricado, marcaid)
     {
-        this._nome = nome;
-        this._preco = preco;
-        this._categoria = categoria;
-        this._fabricado = fabricado;
-        this._marcaid = marcaid;
-        this._nomeMarca = NomeMarca;
+        if (id <= 0) throw new Exception("O id do produto é invalido");
+
+        this._id = id;
+
     }
+
 
     public static int Inserir(Produto produto)
     {
