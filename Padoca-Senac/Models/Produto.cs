@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Padoca_Senac.Models;
 
-internal class Produto
+public class Produto
 {
     private int _id;
     private string _nome;
