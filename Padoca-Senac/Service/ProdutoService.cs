@@ -68,7 +68,7 @@ internal class ProdutoService
         string categoriaProduto = Console.ReadLine()!;
 
         Console.Write("Digite é de Fabricação própria? (S/N): ");
-        bool fabricadoProduto = Console.ReadLine().Trim().ToUpper() == "S";
+        bool fabricadoProduto = Console.ReadLine()!.Trim().ToUpper() == "S";
 
         Console.Write("Digite o [ID] da marca: ");
         int idmarca = int.Parse(Console.ReadLine()!);
