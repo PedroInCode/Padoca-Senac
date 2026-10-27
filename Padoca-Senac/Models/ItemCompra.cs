@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MySqlConnector;
+using Padoca_Senac.banco;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +15,7 @@ public class ItemCompra
     private int _produtoId;
     private int _quantidadeItem;
     private decimal _precoCobrado;
+
 
     //construtor base para validação e criação de um novo item em memória
     public ItemCompra(int produtoId, int quantidadeItem, decimal precoCobrado)
@@ -34,5 +37,26 @@ public class ItemCompra
         
         this._id = id;
         this._compraId = compraId;
+    }
+
+    public decimal CalcularSubtotal()
+    {
+        return this._precoCobrado * this._quantidadeItem;
+    }
+
+    public int Inserir(ItemCompra itemCompra)
+    {
+        using (var cmd = new MySqlCommand("sp_InserirItemCompra"))
+        {
+            //Configura o comando como StoredProcedure
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("p_CompraID", itemCompra._compraId);
+            cmd.Parameters.AddWithValue("p_ProdutoID", itemCompra._produtoId);
+            cmd.Parameters.AddWithValue("p_Quantidade", itemCompra._quantidadeItem);
+            cmd.Parameters.AddWithValue("p_PrecoCobradro", itemCompra._precoCobrado);
+
+            return Banco.ExecutarComando(cmd);
+        }
     }
 }

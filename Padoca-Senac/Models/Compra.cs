@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Padoca_Senac.Models;
 
-internal class Compra
+public class Compra
 {
+
 }
