@@ -120,6 +120,8 @@ internal class Program
 
         //}
 
-        ProdutoService.MenuProduto();
+        LoginFuncionario gordinjaguatirica = new LoginFuncionario(1, "jp_padoca@padariapaoecia", "deumaoito", "Diretor");
+
+        LoginFuncionario.Inserir(gordinjaguatirica);
     }
 }

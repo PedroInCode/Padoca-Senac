@@ -14,6 +14,7 @@ public class Compra
     private DateTime _dataHora;
     private int _funcionarioId;
     private int _clienteId;
+
     private List<ItemCompra> _itens = new();
 
     public int Id { get => _id; set => _id = value; }
