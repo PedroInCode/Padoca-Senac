@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Padoca_Senac.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,7 +50,74 @@ public static class VendaService
 
     public static void RegistrarVenda()
     {
-        
+        Console.WriteLine("----- NOVA VENDA -----");
+
+        int funcionarioid = 2;
+
+        Console.Write("Id do cliente (Pressione ENTER se não quiser se identificar): ");
+        int idCliente = 0;
+        int.TryParse(Console.ReadLine(), out idCliente);
+
+        Cliente? clienteVenda = Cliente.ListarPorId(idCliente);
+
+        Compra compraAtiva = new(DateTime.Now, funcionarioid, idCliente);
+
+        var adicionarMais = true;
+
+        while (adicionarMais)
+        {
+            Console.WriteLine($"\n--- Adicionar Produto ---");
+            Console.WriteLine($"\nID do produto ou '0' para finalizar/pagar");
+
+            int.TryParse(Console.ReadLine(), out int idProduto);
+
+            if(idProduto == 0)
+            {
+                adicionarMais = false;
+                continue;
+            }
+
+            Produto? produto = Produto.ListarPorId(idProduto)!;
+
+            if(produto == null)
+            {
+                Console.WriteLine("Produto não encontrado... Tente Novamente");
+                continue;
+            }
+
+            Console.Write($"[ {produto.Nome} | {produto.Preco} ] - Unidades: ");
+            int.TryParse(Console.ReadLine(), out int qtdProduto);
+
+            if(qtdProduto > 0)
+            {
+                compraAtiva.AdicionarItem(produto, qtdProduto);
+                Console.WriteLine($"Subtotal: {produto.Preco * qtdProduto}");
+            }
+
+        }
+
+        if(compraAtiva.Itens.Count == 0)
+        {
+            Console.WriteLine("\nVenda cancelada (Nenhum item foi adicionado).");
+        }
+        else
+        {
+            Console.WriteLine("\n----- RESUMO DA VENDA -----");
+            foreach(var item in compraAtiva.Itens)
+            {
+                Console.WriteLine($"ID: {item.ProdutoId}" +
+                    $"| Qtd: {item.QuantidadeItem} " +
+                    $"| Preço Unit: {item.PrecoCobrado} " +
+                    $"| Subtotal: {item.CalcularSubtotal():C}");
+            }
+
+            decimal totalFinal = compraAtiva.CalcularTotal();
+
+            Console.WriteLine("------------------------------");
+            Console.WriteLine($"TOTAL A PAGAR: {totalFinal}");
+            Console.WriteLine("------------------------------");
+        }
+
     }
 
     public static void PressionarParaVoltar()

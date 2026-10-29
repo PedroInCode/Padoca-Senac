@@ -14,13 +14,13 @@ public class Compra
     private DateTime _dataHora;
     private int _funcionarioId;
     private int _clienteId;
-
     private List<ItemCompra> _itens = new();
 
     public int Id { get => _id; set => _id = value; }
     public DateTime DataHora { get => _dataHora; set => _dataHora = value; }
     public int FuncionarioId { get => _funcionarioId; set => _funcionarioId = value; }
     public int ClienteId { get => _clienteId; set => _clienteId = value; }
+    public List<ItemCompra> Itens { get => _itens; set => _itens = value; }
 
     public Compra(DateTime dataHora, int funcionarioId, int clienteId)
     {
@@ -41,20 +41,21 @@ public class Compra
 
     public decimal CalcularTotal()
     {
-        return _itens.Sum(it => it.CalcularSubtotal());
+        return Itens.Sum(it => it.CalcularSubtotal());
     }
 
     public void AdicionarItem(Produto produto, int quantidade)
     {
         if (produto == null) throw new Exception("Produto Inexistente");
+        if (quantidade <= 0) throw new Exception("A quantidade não pode ser 0");
 
         ItemCompra novoItem = new ItemCompra(produto.Id, quantidade, produto.Preco);
-        this._itens.Add(novoItem);
+        this.Itens.Add(novoItem);
     }
 
     public void RemoverItem(ItemCompra item)
     {
-        this._itens.Remove(item);
+        this.Itens.Remove(item);
     }
 
     public static int Inserir(Compra compra)

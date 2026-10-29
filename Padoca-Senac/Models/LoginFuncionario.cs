@@ -57,12 +57,12 @@ internal class LoginFuncionario
             if (reader.Read())
             {
                 int id = reader.GetInt32("Id");
-                string nome = reader["Nome"].ToString();
-                string cpf = reader["CPF"].ToString();
-                string cargo = reader["Cargo"].ToString();
+                string nome = reader["Nome"].ToString()!;
+                string cpf = reader["CPF"].ToString()!;
+                string cargo = reader["Cargo"].ToString()!;
 
-                hashDoBanco = reader["senha"].ToString();
-                perfilDoBanco = reader["Perfil"].ToString();
+                hashDoBanco = reader["senha"].ToString()!;
+                perfilDoBanco = reader["Perfil"].ToString()!;
 
                 // Valida a palavra-passe com o BCrypt
                 if (BCrypt.Net.BCrypt.Verify(senhaTextoLimpo, hashDoBanco))
